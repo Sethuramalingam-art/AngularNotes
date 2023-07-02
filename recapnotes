@@ -1,0 +1,20 @@
+npm install angular/cli
+
+ng new my-app
+
+sourceMAp true = can able to debug ts files in broswer
+
+main.ts: platformBrowserdynamic().bootsrapModule(AppModule) = mount the app into browser
+
+*ngFor="let product of products; trackBy: trackByFn" trackByFn impacts more performance
+
+*ngIf, *ngFor, *ngswitch
+
+parent to child @input() product --> chilkd component
+
+child to parent @output() notify ---> child compoenent
+notify.emit('value')
+
+
+in parent component
+<child-app [product]="product" (notify)="onNotify($event)"></child-app>
