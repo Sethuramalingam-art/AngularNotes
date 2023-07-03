@@ -186,3 +186,14 @@ avoid bind in angular
 ngNonBindable
 <div ngNonBindable [appHighlight]="'yellow'">This should not evaluate: {{ 1 +1 }}, but will highlight yellow.
 </div>
+
+
+// change detection stregergy
+onpush and default
+by default it is a default 
+ChangeDetectionStrategy.default
+With this strategy, Angular will have no assumption on the component’s dependency and 
+will check every component from the component tree from top to bottom every time an 
+event triggers change detection on browser events, timers, XHRs, and promises.
+
+changeDetection: ChangeDetectionStrategy.OnPush
