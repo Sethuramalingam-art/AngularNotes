@@ -16,5 +16,173 @@ child to parent @output() notify ---> child compoenent
 notify.emit('value')
 
 
+
 in parent component
 <child-app [product]="product" (notify)="onNotify($event)"></child-app>
+
+
+
+------------------------------------------------------------------------
+routing - in app routing modules
+const routes: Routes = [
+   {
+	path: 'address',
+	component: AddressComponent
+   },	
+   {
+	path: '',
+	redirectTo: '/country',
+	pathMatch: 'full'
+   },
+   {
+	path: '**',
+	component: PageNotFoundComponent 
+   },
+   {
+    path: 'module',
+    loadChildren : () => import ('').then(x=> x.module)
+   }
+];
+RouterModule.forRoot(routes,
+      {
+        preloadingStrategy: PreloadAllModules
+      })
+
+
+<div routerLink="/cart"></div>
+
+if you want it in child modules
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PersonComponent }  from './person.component';
+import { PersonListComponent }  from './person-list/person.list.component';
+
+const personRoutes: Routes = [
+	{ 
+	  path: 'person',
+          component: PersonComponent,
+	  children: [ 
+	    {
+	       path: 'person-list',
+	       component: PersonListComponent
+	    }
+	  ]
+	}  
+];
+
+@NgModule({
+  imports: [ RouterModule.forChild(personRoutes) ],
+  exports: [ RouterModule ]
+})
+export class PersonRoutingModule { } 
+
+
+app.module 
+
+@NgModule({
+    imports:[PersonRoutingModule],
+    exports:[],
+    providers:[],
+    bootstrap:[appcomp],
+    declaration: [],
+
+
+})
+
+-------------------------------------------------
+url: string = '/assets/students.json';
+ngOnInit() {
+    this.http.get(this.url).subscribe(res => {
+      this.studentData = res;
+    });
+  }
+  import { FormBuilder } from '@angular/forms';
+
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <div>
+    <label for="name">
+      Name
+    </label>
+    <input id="name" type="text" formControlName="name">
+  </div>
+
+  <div>
+    <label for="address">
+      Address
+    </label>
+    <input id="address" type="text" formControlName="address">
+  </div>
+
+  <button class="button" type="submit">Purchase</button>
+
+</form>
+
+----------------------------------------------------------------------
+
+ngOnChanges() - Called before ngOnInit() (if the component has bound inputs) and whenever 
+one or more data-bound input properties change.
+
+ngOnInit() - Called once, after the first ngOnChanges(). 
+ngOnInit() is still called even when ngOnChanges() is 
+not (which is the case when there are no template-bound inputs).
+
+ngDoCheck() - Detect and act upon changes that Angular can't or won't detect on its own.
+
+ngAfterContentInit() - Respond after Angular projects external content into the component's view, or 
+into the view that a directive is in.
+
+ngAfterContentChecked() - Respond after Angular checks the content projected into the directive or component.
+
+ngAfterViewInit()	Respond after Angular initializes the component's views and child views, or the view that contains the directive.
+See details and
+
+ngAfterViewChecked()	Respond after Angular checks the component's views and child views, or the view that contains the directive.
+
+ngOnDestroy()	Cleanup just before Angular destroys the directive or component. Unsubscribe Observables and detach event handlers to avoid memory leaks
+
+
+view encapsultation : Emulated is default 
+
+Angular elements - use CustomElementRegistry - createCustomElement() 
+
+
+Pipes : 
+
+DatePipe
+UpperCasePipe
+LowerCase
+Currency
+Decimal, Percent
+
+Tempalte reference variable
+<input #phone placeholder="phone number" />
+phoen is tem ref variable {{phone.value}}
+
+buildin directives
+attribute Directive: NgClass, NgStyle, NgModel
+
+<div [ngClass]="isSpecial ? 'special' : ''">This div is special</div>
+<div [ngStyle]="currentStyles">
+  This div is initially italic, normal weight, and extra large (24px).
+</div>
+
+sTructoral directive
+ngIf
+ngFor
+ngSwitch
+
+attribute drirective
+
+elementRef
+
+this.elementRef.nativelement.style.backgroundcolor = 'yellow'
+
+<div appHighlight></div>
+<div [appHighlight]="'yellow'"></div> pass the value to attribute directives
+
+avoid bind in angular
+
+ngNonBindable
+<div ngNonBindable [appHighlight]="'yellow'">This should not evaluate: {{ 1 +1 }}, but will highlight yellow.
+</div>
