@@ -197,3 +197,11 @@ will check every component from the component tree from top to bottom every time
 event triggers change detection on browser events, timers, XHRs, and promises.
 
 changeDetection: ChangeDetectionStrategy.OnPush
+
+Use detectChanges() when you've updated the model after angular has run it's change detection, 
+or if the update hasn't been in angular world at all.
+this.cd.detectChanges();
+
+Use markForCheck() if you're using OnPush and you're bypassing the ChangeDetectionStrategy by 
+mutating some data or you've updated the model inside a setTimeout;
+this.cd.markForCheck();
